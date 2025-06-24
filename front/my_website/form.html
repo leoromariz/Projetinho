@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participar da Pesquisa - Análise de Mídias Sociais</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="midia2.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-brand">Estudo de Mídias Sociais</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="form.html" class="active">Teste de vício</a></li>
+                <li><a href="data.html">Sobre os Dados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content-section form-page">
+        <div class="form-wrapper">
+            <div class="form-container">
+                <div class="form-header">
+                    <img src="midia2.png" alt="Ícone de Mídias Sociais" class="header-icon">
+                    <h1>Pesquisa de Vício em Mídias Sociais</h1>
+                    <p>Preencha os dados abaixo e descubra se você se enquadra no grupo de viciados em Redes Sociais.</p>
+                </div>
+                <form id="socialMediaForm">
+                    <div class="form-group">
+                        <label for="age"><i class="fas fa-user"></i> Idade do aluno (anos completos):</label>
+                        <input type="number" id="age" name="age" min="1" max="100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender"><i class="fas fa-venus-mars"></i> Gênero:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Selecione o gênero</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="academicLevel"><i class="fas fa-graduation-cap"></i> Nível acadêmico:</label>
+                        <select id="academicLevel" name="academicLevel" required>
+                            <option value="">Selecione o nível acadêmico</option>
+                            <option value="Ensino médio">Ensino médio</option>
+                            <option value="Graduação">Graduação</option>
+                            <option value="Pós-graduação">Pós-graduação</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country"><i class="fas fa-globe"></i> País de Residência:</label>
+                        <select id="country" name="country" required>
+                            <option value="">Selecione o país</option>
+                            <option value="Brasil">Brasil</option>
+                            <option value="Estados Unidos">Estados Unidos</option>
+                            <option value="Canadá">Canadá</option>
+                            <option value="Reino Unido">Reino Unido</option>
+                            <option value="Alemanha">Alemanha</option>
+                            <option value="França">França</option>
+                            <option value="Japão">Japão</option>
+                            <option value="China">China</option>
+                            <option value="Índia">Índia</option>
+                            <option value="Austrália">Austrália</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="avgDailyUsageHours"><i class="fas fa-clock"></i> Média de Horas de Uso Diário (horas):</label>
+                        <input type="number" id="avgDailyUsageHours" name="avgDailyUsageHours" step="0.1" min="0" max="24" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mostUsedPlatform"><i class="fas fa-share-alt"></i> Plataforma mais usada:</label>
+                        <select id="mostUsedPlatform" name="mostUsedPlatform" required>
+                            <option value="">Selecione a plataforma</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="TikTok">TikTok</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Snapchat">Snapchat</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-exclamation-triangle"></i> Afeta o desempenho acadêmico?</label>
+                        <div class="radio-group">
+                            <input type="radio" id="affectsAcademicPerformanceYes" name="affectsAcademicPerformance" value="Sim" required>
+                            <label for="affectsAcademicPerformanceYes">Sim</label>
+                            <input type="radio" id="affectsAcademicPerformanceNo" name="affectsAcademicPerformance" value="Não">
+                            <label for="affectsAcademicPerformanceNo">Não</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sleepHours"><i class="fas fa-moon"></i> Horas de Sono por Noite:</label>
+                        <input type="number" id="sleepHours" name="sleepHours" step="0.5" min="0" max="24" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mentalHealthScore"><i class="fas fa-brain"></i> Pontuação de Saúde Mental (1-10):</label>
+                        <input type="number" id="mentalHealthScore" name="mentalHealthScore" min="1" max="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="relationshipStatus"><i class="fas fa-heart"></i> Status de Relacionamento:</label>
+                        <select id="relationshipStatus" name="relationshipStatus" required>
+                            <option value="">Selecione o status</option>
+                            <option value="Solteiro">Solteiro</option>
+                            <option value="Em um relacionamento">Em um relacionamento</option>
+                            <option value="Complicado">Complicado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="socialMediaConflicts"><i class="fas fa-comments-dollar"></i> Conflitos nas Mídias Sociais:</label>
+                        <input type="number" id="socialMediaConflicts" name="socialMediaConflicts" min="0" required>
+                    </div>
+
+                    <button type="submit">Enviar Pesquisa <i class="fas fa-paper-plane"></i></button>
+                </form>
+                <div id="output" class="output hidden"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Teste de vício em Mídias Sociais.</p>
+    </footer>
+
+    <script src="assets/js/form.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
