@@ -16,8 +16,8 @@ class PreProcessador:
 
         # divisão em treino e teste
         X_train, X_test, Y_train, Y_test = self.__preparar_holdout(dataset,
-                                                                  percentual_teste,
-                                                                  seed)
+                                                                   percentual_teste,
+                                                                   seed)
         # normalização/padronização
         
         return (X_train, X_test, Y_train, Y_test)
@@ -34,15 +34,21 @@ class PreProcessador:
     
     def preparar_form(self, form):
         """ Prepara os dados recebidos do front para serem usados no modelo. """
-        X_input = np.array([form.preg, 
-                            form.plas, 
-                            form.pres, 
-                            form.skin, 
-                            form.test, 
-                            form.mass, 
-                            form.pedi, 
-                            form.age
-                        ])
+        
+        X_input = np.array([
+            form.age,
+            form.gender, 
+            form.academic_level,
+            form.country, 
+            form.avg_daily_usage_hours,
+            form.most_used_platform,
+            form.affects_academic_performance,
+            form.sleep_hours_per_night,
+            form.mental_health_score,
+            form.relationship_status,
+            form.conflicts_over_social_media
+        ])
+        
         # Faremos o reshape para que o modelo entenda que estamos passando
         X_input = X_input.reshape(1, -1)
         return X_input
@@ -50,6 +56,7 @@ class PreProcessador:
     def scaler(self, X_train):
         """ Normaliza os dados. """
         # normalização/padronização
-        scaler = pickle.load(open('./MachineLearning/scalers/minmax_scaler_diabetes.pkl', 'rb'))
+        # ATENÇÃO: Certifique-se de que o scaler utilizado é apropriado para os seus dados de aluno
+        scaler = pickle.load(open('./MachineLearning/scalers/minmax_scaler_addicted.pkl', 'rb'))
         reescaled_X_train = scaler.transform(X_train)
         return reescaled_X_train

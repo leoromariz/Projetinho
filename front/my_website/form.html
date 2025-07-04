@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="icon" href="midia2.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header class="site-header">
         <nav class="navbar">
@@ -26,7 +28,8 @@
                 <div class="form-header">
                     <img src="midia2.png" alt="Ícone de Mídias Sociais" class="header-icon">
                     <h1>Pesquisa de Vício em Mídias Sociais</h1>
-                    <p>Preencha os dados abaixo e descubra se você se enquadra no grupo de viciados em Redes Sociais.</p>
+                    <p>Preencha os dados abaixo e descubra se você se enquadra no grupo de viciados em Redes Sociais.
+                    </p>
                 </div>
                 <form id="socialMediaForm">
                     <div class="form-group">
@@ -38,8 +41,8 @@
                         <label for="gender"><i class="fas fa-venus-mars"></i> Gênero:</label>
                         <select id="gender" name="gender" required>
                             <option value="">Selecione o gênero</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Feminino">Feminino</option>
+                            <option value=1>Masculino</option>
+                            <option value=2>Feminino</option>
                         </select>
                     </div>
 
@@ -47,9 +50,10 @@
                         <label for="academicLevel"><i class="fas fa-graduation-cap"></i> Nível acadêmico:</label>
                         <select id="academicLevel" name="academicLevel" required>
                             <option value="">Selecione o nível acadêmico</option>
-                            <option value="Ensino médio">Ensino médio</option>
-                            <option value="Graduação">Graduação</option>
-                            <option value="Pós-graduação">Pós-graduação</option>
+                            <option value=2>Ensino médio</option>
+                            <option value=0>Graduação</option>
+                            <option value=1>Pós-graduação</option>
+                            <option value=3>Outro</option>
                         </select>
                     </div>
 
@@ -57,47 +61,236 @@
                         <label for="country"><i class="fas fa-globe"></i> País de Residência:</label>
                         <select id="country" name="country" required>
                             <option value="">Selecione o país</option>
-                            <option value="Brasil">Brasil</option>
-                            <option value="Estados Unidos">Estados Unidos</option>
-                            <option value="Canadá">Canadá</option>
-                            <option value="Reino Unido">Reino Unido</option>
-                            <option value="Alemanha">Alemanha</option>
-                            <option value="França">França</option>
-                            <option value="Japão">Japão</option>
-                            <option value="China">China</option>
-                            <option value="Índia">Índia</option>
-                            <option value="Austrália">Austrália</option>
-                            <option value="Outro">Outro</option>
                         </select>
                     </div>
 
+                    <script>
+                        // Objeto com os países e seus códigos
+                        const countriesData = {
+                            'Bangladesh': 0, 'India': 1, 'USA': 2, 'UK': 3, 'Canada': 4, 'Australia': 5,
+                            'Germany': 6, 'Brazil': 7, 'Japan': 8, 'South Korea': 9, 'France': 10,
+                            'Spain': 11, 'Italy': 12, 'Mexico': 13, 'Russia': 14, 'China': 15,
+                            'Sweden': 16, 'Norway': 17, 'Denmark': 18, 'Netherlands': 19, 'Belgium': 20,
+                            'Switzerland': 21, 'Austria': 22, 'Portugal': 23, 'Greece': 24, 'Ireland': 25,
+                            'New Zealand': 26, 'Singapore': 27, 'Malaysia': 28, 'Thailand': 29,
+                            'Vietnam': 30, 'Philippines': 31, 'Indonesia': 32, 'Taiwan': 33,
+                            'Hong Kong': 34, 'Turkey': 35, 'Israel': 36, 'UAE': 37, 'Egypt': 38,
+                            'Morocco': 39, 'South Africa': 40, 'Nigeria': 41, 'Kenya': 42, 'Ghana': 43,
+                            'Argentina': 44, 'Chile': 45, 'Colombia': 46, 'Peru': 47, 'Venezuela': 48,
+                            'Ecuador': 49, 'Uruguay': 50, 'Paraguay': 51, 'Bolivia': 52, 'Costa Rica': 53,
+                            'Panama': 54, 'Jamaica': 55, 'Trinidad': 56, 'Bahamas': 57, 'Iceland': 58,
+                            'Finland': 59, 'Poland': 60, 'Romania': 61, 'Hungary': 62, 'Czech Republic': 63,
+                            'Slovakia': 64, 'Croatia': 65, 'Serbia': 66, 'Slovenia': 67, 'Bulgaria': 68,
+                            'Estonia': 69, 'Latvia': 70, 'Lithuania': 71, 'Ukraine': 72, 'Moldova': 73,
+                            'Belarus': 74, 'Kazakhstan': 75, 'Uzbekistan': 76, 'Kyrgyzstan': 77,
+                            'Tajikistan': 78, 'Armenia': 79, 'Georgia': 80, 'Azerbaijan': 81, 'Cyprus': 82,
+                            'Malta': 83, 'Luxembourg': 84, 'Monaco': 85, 'Andorra': 86, 'San Marino': 87,
+                            'Vatican City': 88, 'Liechtenstein': 89, 'Montenegro': 90, 'Albania': 91,
+                            'North Macedonia': 92, 'Kosovo': 93, 'Bosnia': 94, 'Qatar': 95, 'Kuwait': 96,
+                            'Bahrain': 97, 'Oman': 98, 'Jordan': 99, 'Lebanon': 100, 'Iraq': 101,
+                            'Yemen': 102, 'Syria': 103, 'Afghanistan': 104, 'Pakistan': 105, 'Nepal': 106,
+                            'Bhutan': 107, 'Sri Lanka': 108, 'Maldives': 109, 'Other': 110
+                        };
+
+                        // Mapeamento de nomes em inglês para nomes em português (adicione conforme necessário)
+                        const countryNamesInPortuguese = {
+                            'Bangladesh': 'Bangladesh',
+                            'India': 'Índia',
+                            'USA': 'Estados Unidos',
+                            'UK': 'Reino Unido',
+                            'Canada': 'Canadá',
+                            'Australia': 'Austrália',
+                            'Germany': 'Alemanha',
+                            'Brazil': 'Brasil',
+                            'Japan': 'Japão',
+                            'South Korea': 'Coreia do Sul',
+                            'France': 'França',
+                            'Spain': 'Espanha',
+                            'Italy': 'Itália',
+                            'Mexico': 'México',
+                            'Russia': 'Rússia',
+                            'China': 'China',
+                            'Sweden': 'Suécia',
+                            'Norway': 'Noruega',
+                            'Denmark': 'Dinamarca',
+                            'Netherlands': 'Holanda', // ou Países Baixos
+                            'Belgium': 'Bélgica',
+                            'Switzerland': 'Suíça',
+                            'Austria': 'Áustria',
+                            'Portugal': 'Portugal',
+                            'Greece': 'Grécia',
+                            'Ireland': 'Irlanda',
+                            'New Zealand': 'Nova Zelândia',
+                            'Singapore': 'Singapura',
+                            'Malaysia': 'Malásia',
+                            'Thailand': 'Tailândia',
+                            'Vietnam': 'Vietnã',
+                            'Philippines': 'Filipinas',
+                            'Indonesia': 'Indonésia',
+                            'Taiwan': 'Taiwan',
+                            'Hong Kong': 'Hong Kong',
+                            'Turkey': 'Turquia',
+                            'Israel': 'Israel',
+                            'UAE': 'Emirados Árabes Unidos',
+                            'Egypt': 'Egito',
+                            'Morocco': 'Marrocos',
+                            'South Africa': 'África do Sul',
+                            'Nigeria': 'Nigéria',
+                            'Kenya': 'Quênia',
+                            'Ghana': 'Gana',
+                            'Argentina': 'Argentina',
+                            'Chile': 'Chile',
+                            'Colombia': 'Colômbia',
+                            'Peru': 'Peru',
+                            'Venezuela': 'Venezuela',
+                            'Ecuador': 'Equador',
+                            'Uruguay': 'Uruguai',
+                            'Paraguay': 'Paraguai',
+                            'Bolivia': 'Bolívia',
+                            'Costa Rica': 'Costa Rica',
+                            'Panama': 'Panamá',
+                            'Jamaica': 'Jamaica',
+                            'Trinidad': 'Trindade e Tobago', // Assumindo Trinidad se refere a Trindade e Tobago
+                            'Bahamas': 'Bahamas',
+                            'Iceland': 'Islândia',
+                            'Finland': 'Finlândia',
+                            'Poland': 'Polônia',
+                            'Romania': 'Romênia',
+                            'Hungary': 'Hungria',
+                            'Czech Republic': 'República Tcheca',
+                            'Slovakia': 'Eslováquia',
+                            'Croatia': 'Croácia',
+                            'Serbia': 'Sérvia',
+                            'Slovenia': 'Eslovênia',
+                            'Bulgaria': 'Bulgária',
+                            'Estonia': 'Estônia',
+                            'Latvia': 'Letônia',
+                            'Lithuania': 'Lituânia',
+                            'Ukraine': 'Ucrânia',
+                            'Moldova': 'Moldávia',
+                            'Belarus': 'Belarus',
+                            'Kazakhstan': 'Cazaquistão',
+                            'Uzbekistan': 'Uzbequistão',
+                            'Kyrgyzstan': 'Quirguistão',
+                            'Tajikistan': 'Tajiquistão',
+                            'Armenia': 'Armênia',
+                            'Georgia': 'Geórgia',
+                            'Azerbaijan': 'Azerbaijão',
+                            'Cyprus': 'Chipre',
+                            'Malta': 'Malta',
+                            'Luxembourg': 'Luxemburgo',
+                            'Monaco': 'Mônaco',
+                            'Andorra': 'Andorra',
+                            'San Marino': 'San Marino',
+                            'Vatican City': 'Cidade do Vaticano',
+                            'Liechtenstein': 'Liechtenstein',
+                            'Montenegro': 'Montenegro',
+                            'Albania': 'Albânia',
+                            'North Macedonia': 'Macedônia do Norte',
+                            'Kosovo': 'Kosovo',
+                            'Bosnia': 'Bósnia e Herzegovina', // Assumindo "Bosnia" se refere a Bósnia e Herzegovina
+                            'Qatar': 'Catar',
+                            'Kuwait': 'Kuwait',
+                            'Bahrain': 'Bahrein',
+                            'Oman': 'Omã',
+                            'Jordan': 'Jordânia',
+                            'Lebanon': 'Líbano',
+                            'Iraq': 'Iraque',
+                            'Yemen': 'Iêmen',
+                            'Syria': 'Síria',
+                            'Afghanistan': 'Afeganistão',
+                            'Pakistan': 'Paquistão',
+                            'Nepal': 'Nepal',
+                            'Bhutan': 'Butão',
+                            'Sri Lanka': 'Sri Lanka',
+                            'Maldives': 'Maldivas',
+                            'Other': 'Outro'
+                        };
+
+                        // Função para preencher o select
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const selectElement = document.getElementById('country');
+
+                            for (const countryEnglish in countriesData) {
+                                if (countriesData.hasOwnProperty(countryEnglish)) {
+                                    const countryCode = countriesData[countryEnglish];
+                                    const countryPortuguese = countryNamesInPortuguese[countryEnglish] || countryEnglish; // Usa o nome em português, ou o inglês se não encontrar
+
+                                    const option = document.createElement('option');
+                                    option.value = countryCode;
+                                    option.textContent = countryPortuguese;
+                                    selectElement.appendChild(option);
+                                }
+                            }
+                        });
+                    </script>
+
                     <div class="form-group">
-                        <label for="avgDailyUsageHours"><i class="fas fa-clock"></i> Média de Horas de Uso Diário (horas):</label>
-                        <input type="number" id="avgDailyUsageHours" name="avgDailyUsageHours" step="0.1" min="0" max="24" required>
+                        <label for="avgDailyUsageHours"><i class="fas fa-clock"></i> Média de Horas de Uso Diário
+                            (horas):</label>
+                        <input type="number" id="avgDailyUsageHours" name="avgDailyUsageHours" step="0.1" min="0"
+                            max="24" required>
                     </div>
 
                     <div class="form-group">
                         <label for="mostUsedPlatform"><i class="fas fa-share-alt"></i> Plataforma mais usada:</label>
                         <select id="mostUsedPlatform" name="mostUsedPlatform" required>
                             <option value="">Selecione a plataforma</option>
-                            <option value="Instagram">Instagram</option>
-                            <option value="Facebook">Facebook</option>
-                            <option value="TikTok">TikTok</option>
-                            <option value="YouTube">YouTube</option>
-                            <option value="Snapchat">Snapchat</option>
-                            <option value="LinkedIn">LinkedIn</option>
-                            <option value="Twitter">Twitter</option>
-                            <option value="WhatsApp">WhatsApp</option>
-                            <option value="Outro">Outro</option>
                         </select>
                     </div>
+
+                    <script>
+                        // Objeto com as plataformas e seus códigos
+                        const platformData = {
+                            'Instagram': 0, 'Twitter': 1, 'TikTok': 2, 'YouTube': 3, 'Facebook': 4,
+                            'LinkedIn': 5, 'Snapchat': 6, 'LINE': 7, 'KakaoTalk': 8, 'VKontakte': 9,
+                            'WhatsApp': 10, 'WeChat': 11, 'Other': 12
+                        };
+
+                        // Mapeamento de nomes de plataformas para português, se necessário (opcional)
+                        const platformNamesInPortuguese = {
+                            'Instagram': 'Instagram',
+                            'Twitter': 'Twitter',
+                            'TikTok': 'TikTok',
+                            'YouTube': 'YouTube',
+                            'Facebook': 'Facebook',
+                            'LinkedIn': 'LinkedIn',
+                            'Snapchat': 'Snapchat',
+                            'LINE': 'LINE',
+                            'KakaoTalk': 'KakaoTalk',
+                            'VKontakte': 'VKontakte',
+                            'WhatsApp': 'WhatsApp',
+                            'WeChat': 'WeChat',
+                            'Other': 'Outra'
+                        };
+
+                        // Função para preencher o select
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const selectElement = document.getElementById('mostUsedPlatform');
+
+                            for (const platformEnglish in platformData) {
+                                if (platformData.hasOwnProperty(platformEnglish)) {
+                                    const platformCode = platformData[platformEnglish];
+                                    // Pega o nome em português, se existir no mapeamento, caso contrário, usa o nome em inglês
+                                    const platformPortuguese = platformNamesInPortuguese[platformEnglish] || platformEnglish;
+
+                                    const option = document.createElement('option');
+                                    option.value = platformCode; // Define o valor numérico
+                                    option.textContent = platformPortuguese; // Define o texto visível
+                                    selectElement.appendChild(option);
+                                }
+                            }
+                        });
+                    </script>
 
                     <div class="form-group">
                         <label><i class="fas fa-exclamation-triangle"></i> Afeta o desempenho acadêmico?</label>
                         <div class="radio-group">
-                            <input type="radio" id="affectsAcademicPerformanceYes" name="affectsAcademicPerformance" value="Sim" required>
+                            <input type="radio" id="affectsAcademicPerformanceYes" name="affectsAcademicPerformance"
+                                value=1 required>
                             <label for="affectsAcademicPerformanceYes">Sim</label>
-                            <input type="radio" id="affectsAcademicPerformanceNo" name="affectsAcademicPerformance" value="Não">
+                            <input type="radio" id="affectsAcademicPerformanceNo" name="affectsAcademicPerformance"
+                                value=0 required>
                             <label for="affectsAcademicPerformanceNo">Não</label>
                         </div>
                     </div>
@@ -108,7 +301,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="mentalHealthScore"><i class="fas fa-brain"></i> Pontuação de Saúde Mental (1-10):</label>
+                        <label for="mentalHealthScore"><i class="fas fa-brain"></i> Pontuação de Saúde Mental
+                            (1-10):</label>
                         <input type="number" id="mentalHealthScore" name="mentalHealthScore" min="1" max="10" required>
                     </div>
 
@@ -116,14 +310,16 @@
                         <label for="relationshipStatus"><i class="fas fa-heart"></i> Status de Relacionamento:</label>
                         <select id="relationshipStatus" name="relationshipStatus" required>
                             <option value="">Selecione o status</option>
-                            <option value="Solteiro">Solteiro</option>
-                            <option value="Em um relacionamento">Em um relacionamento</option>
-                            <option value="Complicado">Complicado</option>
+                            <option value=0>Solteiro</option>
+                            <option value=1>Em um relacionamento</option>
+                            <option value=2>Complicado</option>
+                            <option value=3>Outro</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="socialMediaConflicts"><i class="fas fa-comments-dollar"></i> Conflitos nas Mídias Sociais:</label>
+                        <label for="socialMediaConflicts"><i class="fas fa-comments-dollar"></i> Conflitos nas Mídias
+                            Sociais:</label>
                         <input type="number" id="socialMediaConflicts" name="socialMediaConflicts" min="0" required>
                     </div>
 
@@ -141,4 +337,5 @@
     <script src="assets/js/form.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>
