@@ -156,7 +156,7 @@ def save_processed_data(df, processed_data_filepath):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    project_root = r'backend\MachineLearning\data'
+    project_root = r'D:\Documents\addicted_v1.0\Projetinho\backend\MachineLearning'
 
     raw_data_filename = 'students_social_media_addiction.csv'
     raw_data_path = os.path.join(project_root, 'data', raw_data_filename)

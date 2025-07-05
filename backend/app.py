@@ -1,4 +1,5 @@
-from backend.model.aluno import Aluno
+import backend.model.aluno
+
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
 from urllib.parse import unquote
@@ -14,6 +15,8 @@ from schemas.error_schema import ErrorSchema
 from flask_cors import CORS
 from model.base import Session
 
+
+aluno = backend.model.aluno.Aluno()
 
 # Instanciando o objeto OpenAPI
 info = Info(title="Minha API", version="1.0.0")

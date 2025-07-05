@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Carregar o arquivo CSV
-df = pd.read_csv(r'backend\MachineLearning\data\students_social_media_addiction_processed.csv')
+df = pd.read_csv(r'D:\Documents\addicted_v1.0\Projetinho\backend\MachineLearning\data\students_social_media_addiction_processed.csv')
 
 # Extrair a coluna 'Addicted_Score'
 addicted_score_column = df['Addicted_Score']
@@ -10,7 +10,7 @@ addicted_score_column = df['Addicted_Score']
 new_df = pd.DataFrame(addicted_score_column)
 
 # Salvar o novo DataFrame em um arquivo CSV
-new_df.to_csv(r'backend\MachineLearning\data\y_test_dataset_addicted.csv', index=False)
+new_df.to_csv(r'D:\Documents\addicted_v1.0\Projetinho\backend\MachineLearning\data\y_test_dataset_addicted.csv', index=False)
 
 print("A coluna 'Addicted_Score' foi extraída com sucesso para o arquivo 'y_test_dataset_addicted.csv'.")
 
@@ -18,7 +18,7 @@ print("A coluna 'Addicted_Score' foi extraída com sucesso para o arquivo 'y_tes
 df_sem_addicted_score = df.drop(columns=['Addicted_Score'])
 
 # Salvar o novo DataFrame em um arquivo CSV
-df_sem_addicted_score.to_csv(r'backend\MachineLearning\data\X_test_dataset_addicted_.csv', index=False)
+df_sem_addicted_score.to_csv(r'D:\Documents\addicted_v1.0\Projetinho\backend\MachineLearning\data\X_test_dataset_addicted_.csv', index=False)
 
 
 print("A coluna 'Addicted_Score' foi removida com sucesso. O novo arquivo CSV é 'X_test_dataset_addicted_.csv'.")
