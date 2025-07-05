@@ -1,22 +1,17 @@
-import backend.model.aluno
-
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
 from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
 
-from model import *
-from model.preprocessador import PreProcessador
-from model.pipeline import Pipeline
-from logger import logger
-from schemas.aluno_schema import AlunoBuscaSchema, AlunoSchema, AlunoViewSchema, apresenta_aluno, apresenta_alunos
-from schemas.error_schema import ErrorSchema
-from flask_cors import CORS
+from model.pipeline import *
 from model.base import Session
+from model.preprocessador import *
+from logger import logger
+from schemas.aluno_schema import *
+from schemas.error_schema import *
+from flask_cors import CORS
 
-
-aluno = backend.model.aluno.Aluno()
 
 # Instanciando o objeto OpenAPI
 info = Info(title="Minha API", version="1.0.0")

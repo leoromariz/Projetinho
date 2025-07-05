@@ -1,12 +1,8 @@
-# mvp-qualidade-seguranca-sistemas-inteligentes/src/data/make_dataset.py
-
 import pandas as pd
 import logging
 import os
 
 # Definição dos mapeamentos manuais para as colunas categóricas
-# ATENÇÃO: VERIFIQUE ESTES MAPEAMENTOS COM SEUS DADOS REAIS
-# E AJUSTE SE HOUVER OUTRAS CATEGORIAS OU SE QUISER UMA ORDEM ESPECÍFICA.
 CATEGORICAL_MAPPINGS = {
     'Gender': {
         'Male': 0, 'Female': 1, 'Other': 2
