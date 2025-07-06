@@ -194,124 +194,7 @@ plt.boxplot(results)
 ax.set_xticklabels(names, rotation=90)
 plt.show()
 
-np.random.seed(7)  # Definindo uma semente global para este bloco
 
-# Lista de modelos
-models = []
-
-# Criando os modelos e adicionando-os na lista de modelos
-models.append(('LR', LogisticRegression(max_iter=200))) 
-models.append(('KNN', KNeighborsClassifier())) 
-models.append(('CART', DecisionTreeClassifier())) 
-models.append(('NB', GaussianNB()))
-models.append(('SVM', SVC()))
-
-# Definindo os parâmetros do classificador base para o BaggingClassifier
-base = DecisionTreeClassifier()
-num_trees = 100
-max_features = 3
-
-# Criando os modelos para o VotingClassifier
-bases = []
-model1 = LogisticRegression(max_iter=200)
-bases.append(('logistic', model1))
-model2 = DecisionTreeClassifier()
-bases.append(('cart', model2))
-model3 = SVC()
-bases.append(('svm', model3))
-
-# Criando os ensembles e adicionando-os na lista de modelos
-models.append(('Bagging', BaggingClassifier(estimator=base, n_estimators=num_trees)))
-models.append(('RF', RandomForestClassifier(n_estimators=num_trees, max_features=max_features)))
-models.append(('ET', ExtraTreesClassifier(n_estimators=num_trees, max_features=max_features)))
-models.append(('Ada', AdaBoostClassifier(n_estimators=num_trees)))
-models.append(('GB', GradientBoostingClassifier(n_estimators=num_trees)))
-models.append(('Voting', VotingClassifier(estimators=bases, voting='hard')))
-
-# Definindo os componentes do pipeline
-standard_scaler = ('StandardScaler', StandardScaler())
-min_max_scaler = ('MinMaxScaler', MinMaxScaler())
-
-# Lista de pipelines
-pipelines = []
-
-# Criando pipelines para cada modelo
-for name, model in models:
-    pipelines.append((name + '-orig', Pipeline(steps=[(name, model)])))
-    pipelines.append((name + '-padr', Pipeline(steps=[standard_scaler, (name, model)])))
-    pipelines.append((name + '-norm', Pipeline(steps=[min_max_scaler, (name, model)])))
-
-# Definindo os parâmetros para GridSearchCV
-param_grids = {
-    'LR': {
-        'LR__C': [0.01, 0.1, 1, 10, 100],
-        'LR__solver': ['liblinear', 'saga']
-    },
-    'KNN': {
-        'KNN__n_neighbors': [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21],
-        'KNN__metric': ["euclidean", "manhattan", "minkowski"]
-    },
-    'CART': {
-        'CART__max_depth': [None, 10, 20, 30, 40, 50],
-        'CART__min_samples_split': [2, 5, 10],
-        'CART__min_samples_leaf': [1, 2, 4]
-    },
-    'NB': {
-        'NB__var_smoothing': [1e-9, 1e-8, 1e-7, 1e-6, 1e-5]
-    },
-    'SVM': {
-        'SVM__C': [0.1, 1, 10, 100],
-        'SVM__gamma': [1, 0.1, 0.01, 0.001],
-        'SVM__kernel': ['rbf', 'linear']
-    },
-    'RF': {
-        'RF__n_estimators': [10, 50, 100, 200],
-        'RF__max_features': ['auto', 'sqrt', 'log2'],
-        'RF__max_depth': [None, 10, 20, 30],
-        'RF__min_samples_split': [2, 5, 10],
-        'RF__min_samples_leaf': [1, 2, 4]
-    },
-    'ET': {
-        'ET__n_estimators': [10, 50, 100, 200],
-        'ET__max_features': ['auto', 'sqrt', 'log2'],
-        'ET__max_depth': [None, 10, 20, 30],
-        'ET__min_samples_split': [2, 5, 10],
-        'ET__min_samples_leaf': [1, 2, 4]
-    },
-    'Ada': {
-        'Ada__n_estimators': [10, 50, 100, 200],
-        'Ada__learning_rate': [0.01, 0.1, 1, 10]
-    },
-    'GB': {
-        'GB__n_estimators': [10, 50, 100, 200],
-        'GB__learning_rate': [0.01, 0.1, 0.2, 0.3],
-        'GB__max_depth': [3, 5, 7, 9]
-    },
-    'Voting': {
-        # Para VotingClassifier, geralmente não há hiperparâmetros para ajustar diretamente
-        # Ajustar os hiperparâmetros dos estimadores base individualmente se necessário
-    }
-}
-
-# Parâmetros de cross-validation e scoring
-scoring = 'accuracy'
-kfold = 5
-
-# Executando o GridSearchCV para cada pipeline
-for name, pipeline in pipelines:
-    model_type = name.split('-')[0]
-    if model_type in param_grids:
-        param_grid = param_grids[model_type]
-    else:
-        param_grid = {}  # Para modelos que não têm parâmetros definidos
-
-    grid = GridSearchCV(estimator=pipeline, param_grid=param_grid, scoring=scoring, cv=kfold)
-    grid.fit(X_train, y_train)
-    # Imprimindo a melhor configuração
-    print("Modelo: %s - Melhor: %f usando %s" % (name, grid.best_score_, grid.best_params_))
-    
-#Demora para rodar, mas é possível salvar o modelo treinado para uso posterior
-# with open('best_model.pkl', 'wb') as f:
 
 # Tuning do KNN
 
@@ -375,19 +258,28 @@ pipeline.fit(X_train, y_train)
 predictions = pipeline.predict(X_test)
 print(accuracy_score(y_test, predictions))
 
-np.random.seed(7)
+# Salvando o modelo
+model_filename = 'rf_addicted_classifier.pkl'
+with open("../models/"+model_filename, 'wb') as file:
+    pickle.dump(model, file)
 
-model = RandomForestClassifier(n_estimators=50, 
-                               max_features='sqrt',
-                               min_samples_split=2,
-                               max_depth=10,
-                               min_samples_leaf=1)
+# Salvando o scaler
+scaler_filename = 'minmax_scaler_addicted.pkl'
+with open("../scalers/"+scaler_filename, 'wb') as file:
+    pickle.dump(scaler, file)
+    
+# Salvando o pipeline
+pipeline_filename = 'rf_addicted_pipeline.pkl'
+with open("../pipelines/"+pipeline_filename, 'wb') as file:
+    pickle.dump(pipeline, file)
+    
+    
+# Salvando X_test e y_test
+X_test_df = pd.DataFrame(X_test, columns=dataset.columns[1:12])  # Excluindo a primeira coluna (ID)
+y_test_df = pd.DataFrame(y_test, columns=[dataset.columns[12]])
+X_test_df.to_csv("../data/X_test_dataset_addicted_.csv", index=False)
+y_test_df.to_csv("../data/y_test_dataset_addicted_.csv", index=False)
 
-pipeline = Pipeline(steps=[('MinMaxScaler', MinMaxScaler()), ('RF', model)])
-
-pipeline.fit(X_train, y_train)
-predictions = pipeline.predict(X_test)
-print(accuracy_score(y_test, predictions))
 
 # Preparação do modelo com TODO o dataset
 scaler = MinMaxScaler().fit(X) # ajuste do scaler com TODO o dataset
@@ -396,17 +288,17 @@ model.fit(rescaledX, y)
 
 # Novos dados - não sabemos a classe!
 data = {
-    'Age': [19, 20, 23, 18, 21],
-    'Gender': [1, 1, 2, 0, 0],
+    'Age': [19, 22, 20, 18, 21],
+    'Gender': [1, 0, 1, 0, 0],
     'Academic_Level': [0, 1, 0, 2, 1],
-    'Country': [0, 0, 2, 3, 4],
+    'Country': [0, 1, 2, 3, 4],
     'Avg_Daily_Usage_Hours': [5.2, 2.1, 6.0, 3.0, 4.5],
-    'Most_Used_Platform': [0, 0, 1, 0, 1],
-    'Affects_Academic_Performance': [1, 7, 5, 7, 6],
+    'Most_Used_Platform': [0, 1, 2, 3, 4],
+    'Affects_Academic_Performance': [1, 0, 1, 0, 1],
     'Sleep_Hours_Per_Night': [6.5, 7.5, 5.0, 7.0, 6.0],
-    'Mental_Health_Score': [6, 8, 2, 1, 1],
-    'Relationship_Status': [1, 0, 4, 4, 2],
-    'Conflicts_Over_Social_Media': [3, 0, 9, 1, 7]
+    'Mental_Health_Score': [6, 8, 5, 7, 6],
+    'Relationship_Status': [1, 0, 2, 0, 1],
+    'Conflicts_Over_Social_Media': [3, 0, 4, 1, 2]
 }
 
 atributos = [

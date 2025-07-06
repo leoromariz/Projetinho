@@ -28,8 +28,8 @@ class PreProcessador:
         O parâmetro test_size é o percentual de dados de teste.
         """
         dados = dataset.values
-        X = dados[:, 0:-1]
-        Y = dados[:, -1]
+        X = dados[:, 1:12]
+        Y = dados[:, 12]
         return train_test_split(X, Y, test_size=percentual_teste, random_state=seed)
     
     def preparar_form(self, form):
@@ -37,9 +37,9 @@ class PreProcessador:
         
         X_input = np.array([
             form.age,
-            form.gender, 
+            form.gender,
             form.academic_level,
-            form.country, 
+            form.country,
             form.avg_daily_usage_hours,
             form.most_used_platform,
             form.affects_academic_performance,

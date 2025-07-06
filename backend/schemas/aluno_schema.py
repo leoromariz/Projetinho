@@ -14,11 +14,11 @@ class AlunoSchema(BaseModel):
     country: int = Field(..., example=7, description="País de origem do aluno")
     avg_daily_usage_hours: float = Field(..., example=3.5, description="Média de horas de uso diário de redes sociais")
     most_used_platform: int = Field(..., example=4, description="Plataforma de mídia social mais utilizada")
-    affects_academic_performance: int = Field(..., example=0, description="Indica se o uso de redes sociais afeta o desempenho acadêmico")
-    sleep_hours_per_night: float = Field(..., example=7.0, description="Média de horas de sono por noite")
+    affects_academic_performance: int = Field(..., example=1, description="Indica se o uso de redes sociais afeta o desempenho acadêmico")
+    sleep_hours_per_night: float = Field(..., example=7.5, description="Média de horas de sono por noite")
     mental_health_score: int = Field(..., example=7, description="Pontuação de saúde mental (ex: 0-10)")
     relationship_status: int = Field(..., example=3, description="Status de relacionamento")
-    conflicts_over_social_media: int = Field(..., example=0, description="Número de conflitos causados por mídias sociais")
+    conflicts_over_social_media: int = Field(..., example=1, description="Número de conflitos causados por mídias sociais")
 
 
 class AlunoViewSchema(BaseModel):

@@ -1,5 +1,5 @@
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect
+from flask import redirect, request # Importado 'request'
 from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
@@ -8,8 +8,9 @@ from model.pipeline import *
 from model.base import Session
 from model.preprocessador import *
 from logger import logger
-from schemas.aluno_schema import *
-from schemas.error_schema import *
+from schemas.error_schema import ErrorSchema # Importação explícita do schema de erro
+from schemas.aluno_schema import AlunoSchema, AlunoViewSchema, AlunoBuscaSchema, apresenta_aluno, apresenta_alunos # Importações explícitas e funções de apresentação
+from model.aluno import Aluno # Importação explícita do modelo Aluno
 from flask_cors import CORS
 
 
@@ -35,7 +36,8 @@ aluno_tag = Tag(
 @app.get("/", tags=[home_tag])
 def home():
     """Redireciona para o index.html do frontend."""
-    return redirect("/front//my_website/index.html")
+    # Corrigido o caminho do redirecionamento, removendo a barra dupla
+    return redirect("/front/my_website/index.html") 
 
 
 # Rota para documentação OpenAPI
@@ -49,12 +51,12 @@ def docs():
 @app.get(
     "/alunos",
     tags=[aluno_tag],
-    responses={"200": AlunoViewSchema, "404": ErrorSchema}, #TODO: Corrigir o nome do schema de resposta
+    responses={"200": AlunoViewSchema, "404": ErrorSchema},
 )
 def get_alunos():
     """Lista todos os alunos cadastrados na base
     Args:
-       none
+        none
 
     Returns:
         list: lista de alunos cadastrados na base
@@ -70,7 +72,7 @@ def get_alunos():
         return {"alunos": []}, 200
     else:
         logger.debug(f"%d alunos encontrados" % len(alunos))
-        print(alunos)
+        print(alunos) # Isso pode imprimir objetos SQLAlchemy, não os dados formatados
         return apresenta_alunos(alunos), 200
 
 
@@ -84,24 +86,62 @@ def get_alunos():
         "409": ErrorSchema,
     },
 )
-def predict(form: AlunoSchema):
+# A função agora não recebe o 'form' diretamente na assinatura,
+# pois os dados virão de request.form
+def predict():
     """Adiciona um novo aluno à base de dados
     Retorna uma representação dos alunos e diagnósticos associados.
-
     """
+    # Coleta os dados do formulário enviado como x-www-form-urlencoded
+    form_data = request.form.to_dict()
+    logger.debug(f"Dados recebidos do formulário: {form_data}")
+
+    # Valida os dados usando o AlunoSchema do Pydantic
+    try:
+        # Pydantic fará a validação dos tipos e campos obrigatórios
+        form = AlunoSchema(**form_data)
+    except Exception as e:
+        error_msg = f"Dados de entrada inválidos. Detalhes: {e}"
+        logger.warning(f"Erro de validação ao adicionar aluno: {error_msg}")
+        return {"message": error_msg}, 400
+
     # Instanciando classes
     preprocessador = PreProcessador()
     pipeline = Pipeline()
 
     # Preparando os dados para o modelo
     X_input = preprocessador.preparar_form(form)
+    logger.debug(f"Shape de X_input antes da predição: {X_input.shape}") # Debugging do shape
+    
     # Carregando modelo
     model_path = "./MachineLearning/pipelines/rf_addicted_pipeline.pkl"
-    modelo = pipeline.carrega_pipeline(model_path)
+    try:
+        modelo = pipeline.carrega_pipeline(model_path)
+        logger.debug(f"Pipeline carregado com sucesso de: {model_path}")
+        if hasattr(modelo, 'named_steps') and 'MinMaxScaler' in modelo.named_steps:
+            scaler_in_pipeline = modelo.named_steps['MinMaxScaler']
+            if hasattr(scaler_in_pipeline, 'n_features_in_'):
+                logger.debug(f"MinMaxScaler no pipeline carregado espera {scaler_in_pipeline.n_features_in_} features.")
+        elif hasattr(modelo, 'n_features_in_'):
+            logger.debug(f"Modelo carregado (não pipeline) espera {modelo.n_features_in_} features.")
+
+    except Exception as e:
+        error_msg = f"Erro ao carregar o modelo de ML: {e}"
+        logger.error(error_msg)
+        return {"message": error_msg}, 500 # Erro interno do servidor se o modelo não carregar
+
     # Realizando a predição
-    outcome = int(modelo.predict(X_input)[0])
+    try:
+        outcome = int(modelo.predict(X_input)[0])
+        logger.debug(f"Predição realizada: {outcome}")
+    except Exception as e:
+        error_msg = f"Erro ao realizar a predição com o modelo: {e}"
+        logger.error(error_msg)
+        return {"message": error_msg}, 500 # Erro interno do servidor se a predição falhar
+
 
     aluno = Aluno(
+        # ID é autoincrementado, então não o passamos aqui.
         age = form.age,
         gender = form.gender,
         academic_level = form.academic_level,
@@ -114,35 +154,36 @@ def predict(form: AlunoSchema):
         relationship_status = form.relationship_status,
         conflicts_over_social_media = form.conflicts_over_social_media,
         outcome = outcome
-        )
-    logger.debug(f"Adicionando aluno de id: '{aluno.id}'")
+    )
+    # logger.debug(f"Adicionando aluno de id: '{aluno.id}'") # ID ainda é None aqui, logar após commit
 
     try:
         # Criando conexão com a base
         session = Session()
 
-        # Checando se aluno já existe na base
-        if session.query(Aluno).filter(Aluno.id == aluno.id).first():
-            error_msg = "Aluno já existente na base :/"
-            logger.warning(
-                f"Erro ao adicionar aluno '{aluno.id}', {error_msg}"
-            )
-            return {"message": error_msg}, 409
+        # REMOVIDA A VERIFICAÇÃO DE DUPLICIDADE POR ID, pois o ID é autoincrementado
+        # e será gerado no commit. A unicidade é garantida pelo DB.
+        # Se você tiver outra regra de unicidade (ex: combinação de campos),
+        # você precisaria de uma UniqueConstraint no modelo SQLAlchemy para que
+        # IntegrityError seja capturado aqui.
 
         # Adicionando aluno
         session.add(aluno)
         # Efetivando o comando de adição
         session.commit()
-        # Concluindo a transação
+        # O ID só estará disponível após o commit se for autoincrementado
         logger.debug(f"Adicionado aluno de id: '{aluno.id}'")
         return apresenta_aluno(aluno), 200
 
-    # Caso ocorra algum erro na adição
-    except Exception as e:
-        error_msg = "Não foi possível salvar novo aluno :/"
-        logger.warning(
-            f"Erro ao adicionar aluno '{aluno.id}', {error_msg}"
-        )
+    # Caso ocorra algum erro na adição (ex: IntegrityError para outras colunas)
+    except IntegrityError as e: # Captura erro de integridade do DB
+        error_msg = "Erro de integridade ao salvar novo aluno (possível duplicidade em campos únicos, se houver) :/"
+        logger.warning(f"{error_msg}. Detalhes: {e}")
+        return {"message": error_msg}, 409 # Conflito
+
+    except Exception as e: # Captura outros erros gerais
+        error_msg = f"Não foi possível salvar novo aluno :/. Detalhes: {e}"
+        logger.warning(f"Erro geral ao adicionar aluno: {error_msg}")
         return {"message": error_msg}, 400
 
 
@@ -178,9 +219,10 @@ def get_aluno(query: AlunoBuscaSchema):
         logger.warning(
             f"Erro ao buscar aluno '{aluno_id}', {error_msg}"
         )
-        return {"mesage": error_msg}, 404
+        return {"message": error_msg}, 404
     else:
-        logger.debug(f"Aluno encontrado: '{aluno.name}'")
+        # Cuidado: aluno.name não existe no seu modelo, talvez seja aluno.id ou outro campo para log
+        logger.debug(f"Aluno encontrado: '{aluno.id}'") 
         # retorna a representação do aluno
         return apresenta_aluno(aluno), 200
 

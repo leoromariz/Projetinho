@@ -15,7 +15,7 @@ class Aluno(Base):
     age= Column("Age", Integer)
     gender = Column("Gender", Integer)
     academic_level = Column("Academic_Level", Integer)
-    country = Column("BloodPressure", Integer)
+    country = Column("Country", Integer)
     avg_daily_usage_hours = Column("Avg_Daily_Usage_Hours", Float)
     most_used_platform = Column("Most_Used_Platform", Integer)
     affects_academic_performance = Column("Affects_Academic_Performance", Integer)
