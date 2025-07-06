@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from typing import Union
 
-from  model import Base
+from  model.base import Base
 
 # colunas = Student_ID,Age,Gender,Academic_Level,Country,Avg_Daily_Usage_Hours,Most_Used_Platform,Affects_Academic_Performance,
 # Sleep_Hours_Per_Night,Mental_Health_Score,Relationship_Status,Conflicts_Over_Social_Media,
@@ -23,13 +23,13 @@ class Aluno(Base):
     mental_health_score = Column("Mental_Health_Score", Integer)
     relationship_status = Column("Relationship_Status", Integer)
     conflicts_over_social_media = Column("Conflicts_Over_Social_Media", Integer)
-    data_insercao = Column(DateTime, default=datetime.now())
+    outcome = Column(Integer)
 
 
     def __init__(self, age:int, gender:int, academic_level:int,
                  country:int, avg_daily_usage_hours:float, most_used_platform:int,
                  affects_academic_performance:int, sleep_hours_per_night:float, mental_health_score:int,
-                 relationship_status:int, conflicts_over_social_media:int, data_insercao: Union[DateTime, None] = None):
+                 relationship_status:int, conflicts_over_social_media:int, outcome:int):
         """
         Cria um Aluno
 
@@ -58,7 +58,5 @@ class Aluno(Base):
         self.mental_health_score = mental_health_score
         self.relationship_status = relationship_status
         self.conflicts_over_social_media = conflicts_over_social_media
-
-        # se não for informada, será o data exata da inserção no banco
-        if data_insercao:
-            self.data_insercao = data_insercao
+        # o outcome é a predição do modelo, que deve ser informada
+        self.outcome = outcome

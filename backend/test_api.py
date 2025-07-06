@@ -1,7 +1,8 @@
 import pytest
 import json
 from app import app
-from model import Session, Aluno
+from model.base import Session
+from model.aluno import Aluno
 
 # To run: pytest -v test_api.py
 
@@ -16,17 +17,18 @@ def client():
 def sample_student_data():
     """Dados de exemplo para teste de aluno"""
     return {
-        "age": "22",
-        "gender": "Masculino",
-        "academic_level": "Superior",
-        "country": "Brasil",
+        "id": 9999999999,
+        "age": 22,
+        "gender": 1,
+        "academic_level": 1,
+        "country": 7,
         "avg_daily_usage_hours": 5,
-        "most_used_platform": "Instagram",
-        "affects_academic_performance": "Sim",
+        "most_used_platform": 1,
+        "affects_academic_performance": 1,
         "sleep_hours_per_night": 7,
         "mental_health_score": 8,
-        "relationship_status": "Solteiro",
-        "conflicts_over_social_media": "Não"
+        "relationship_status": 0,
+        "conflicts_over_social_media": 0
     }
 
 
@@ -149,15 +151,17 @@ def test_prediction_edge_cases(client):
     """Testa casos extremos para predição"""
     # Teste com valores mínimos
     min_data = {
+        "id": 99999999999,
         "age": 0,
-        "gender": "Male",
-        "academic_level": "High School",
+        "gender": 0,
+        "country": 0,
+        "academic_level": 0,
         "avg_daily_usage_hours": 0.0,
-        "most_used_platform": "Instagram",
-        "affects_academic_performance": "Yes",
+        "most_used_platform": 0,
+        "affects_academic_performance": 0,
         "sleep_hours_per_night": 0.0,
         "mental_health_score": 0,
-        "relationship_status": "Solteiro(a)",
+        "relationship_status": 0,
         "conflicts_over_social_media": 0
     }
 
@@ -176,15 +180,17 @@ def test_prediction_edge_cases(client):
     
     # Teste com valores máximos típicos
     max_data = {
+        "id": 999999999999,
         "age": 100,
-        "gender": "Male",
-        "academic_level": "High School",
+        "gender": 2,
+        "country": 110,
+        "academic_level": 3,
         "avg_daily_usage_hours": 24.0,
-        "most_used_platform": "Instagram",
-        "affects_academic_performance": "Yes",
+        "most_used_platform": 12,
+        "affects_academic_performance": 1,
         "sleep_hours_per_night": 24.0,
         "mental_health_score": 10,
-        "relationship_status": "Solteiro(a)",
+        "relationship_status": 3,
         "conflicts_over_social_media": 100
     }
 
@@ -199,7 +205,7 @@ def cleanup_test_students():
     """Limpa alunos de teste do banco"""
     session = Session()
     test_students = session.query(Aluno).filter(
-        Aluno.id.in_(['id', 'Aluno Minimo', 'Aluno Maximo'])
+        Aluno.id.in_([999999999, 9999999999, 99999999999])
     ).all()
 
     for student in test_students:

@@ -9,15 +9,15 @@ class AlunoSchema(BaseModel):
     """ Define como um novo aluno a ser inserido deve ser representado
     """
     age: int = Field(..., example=20, description="Idade do aluno")
-    gender: str = Field(..., example=1, description="Gênero do aluno")
-    academic_level: str = Field(..., example=2, description="Nível acadêmico do aluno")
-    country: str = Field(..., example=7, description="País de origem do aluno")
+    gender: int = Field(..., example=1, description="Gênero do aluno")
+    academic_level: int = Field(..., example=2, description="Nível acadêmico do aluno")
+    country: int = Field(..., example=7, description="País de origem do aluno")
     avg_daily_usage_hours: float = Field(..., example=3.5, description="Média de horas de uso diário de redes sociais")
-    most_used_platform: str = Field(..., example=4, description="Plataforma de mídia social mais utilizada")
+    most_used_platform: int = Field(..., example=4, description="Plataforma de mídia social mais utilizada")
     affects_academic_performance: int = Field(..., example=0, description="Indica se o uso de redes sociais afeta o desempenho acadêmico")
     sleep_hours_per_night: float = Field(..., example=7.0, description="Média de horas de sono por noite")
     mental_health_score: int = Field(..., example=7, description="Pontuação de saúde mental (ex: 0-10)")
-    relationship_status: str = Field(..., example=3, description="Status de relacionamento")
+    relationship_status: int = Field(..., example=3, description="Status de relacionamento")
     conflicts_over_social_media: int = Field(..., example=0, description="Número de conflitos causados por mídias sociais")
 
 
@@ -25,15 +25,15 @@ class AlunoViewSchema(BaseModel):
     """Define como um aluno será retornado
     """
     age: int = Field(..., example=20, description="Idade do aluno")
-    gender: str = Field(..., example=1, description="Gênero do aluno")
-    academic_level: str = Field(..., example=2, description="Nível acadêmico do aluno")
-    country: str = Field(..., example=7, description="País de origem do aluno")
+    gender: int = Field(..., example=1, description="Gênero do aluno")
+    academic_level: int = Field(..., example=2, description="Nível acadêmico do aluno")
+    country: int = Field(..., example=7, description="País de origem do aluno")
     avg_daily_usage_hours: float = Field(..., example=3.5, description="Média de horas de uso diário de redes sociais")
-    most_used_platform: str = Field(..., example=4, description="Plataforma de mídia social mais utilizada")
+    most_used_platform: int = Field(..., example=4, description="Plataforma de mídia social mais utilizada")
     affects_academic_performance: int = Field(..., example=0, description="Indica se o uso de redes sociais afeta o desempenho acadêmico")
     sleep_hours_per_night: float = Field(..., example=7.0, description="Média de horas de sono por noite")
     mental_health_score: int = Field(..., example=7, description="Pontuação de saúde mental (ex: 0-10)")
-    relationship_status: str = Field(..., example=3, description="Status de relacionamento")
+    relationship_status: int = Field(..., example=3, description="Status de relacionamento")
     conflicts_over_social_media: int = Field(..., example=0, description="Número de conflitos causados por mídias sociais")
     outcome: int = Field(..., example=1, description="Resultado do aluno (ex: 0-1)")
 

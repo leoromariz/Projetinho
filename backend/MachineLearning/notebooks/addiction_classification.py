@@ -28,9 +28,8 @@ from sklearn.ensemble import VotingClassifier
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 
-
 # Informa a URL de importação do dataset
-url = r"backend\MachineLearning\data\students_social_media_addiction_processed.csv"
+url = r"..\data\students_social_media_addiction_processed.csv"
 
 # Lê o arquivo 
 dataset = pd.read_csv(url, delimiter=',')
@@ -45,14 +44,14 @@ seed = 7 # semente aleatória
 
 # Separação em conjuntos de treino e teste
 array = dataset.values
-X = array[:,1:11]
-y = array[:,11]
+X = array[:,1:12]
+y = array[:,12]
 X_train, X_test, y_train, y_test = train_test_split(X, y,
-    test_size=test_size, shuffle=True, random_state=seed, stratify=y) # holdout com estratificação
+    test_size=test_size, shuffle=True, random_state=seed) # holdout com estratificação
 
 # Parâmetros e partições da validação cruzada
 scoring = 'accuracy'
-num_particoes = 10
+num_particoes = 12
 kfold = StratifiedKFold(n_splits=num_particoes, shuffle=True, random_state=seed) # validação cruzada com estratificação
 
 np.random.seed(7) # definindo uma semente global
@@ -341,7 +340,7 @@ for name, model in pipelines:
     # imprime a melhor configuração
     print("Sem tratamento de missings: %s - Melhor: %f usando %s" % (name, grid.best_score_, grid.best_params_)) 
 
-    # Avaliação do modelo com o conjunto de testes
+# Avaliação do modelo com o conjunto de testes
 # Melhor modelo
 # RF-norm - Melhor: 0.783287 usando {'RF__max_depth': 10, 'RF__max_features': 'sqrt', 'RF__min_samples_leaf': 1, 'RF__min_samples_split': 2, 'RF__n_estimators': 50}
 
@@ -376,28 +375,19 @@ pipeline.fit(X_train, y_train)
 predictions = pipeline.predict(X_test)
 print(accuracy_score(y_test, predictions))
 
-# Salvando o modelo
-model_filename = 'rf_diabetes_classifier.pkl'
-with open("../models/"+model_filename, 'wb') as file:
-    pickle.dump(model, file)
+np.random.seed(7)
 
-# Salvando o scaler
-scaler_filename = 'minmax_scaler_diabetes.pkl'
-with open("../scalers/"+scaler_filename, 'wb') as file:
-    pickle.dump(scaler, file)
-    
-# Salvando o pipeline
-pipeline_filename = 'rf_diabetes_pipeline.pkl'
-with open("../pipelines/"+pipeline_filename, 'wb') as file:
-    pickle.dump(pipeline, file)
-    
-    
-# Salvando X_test e y_test
-X_test_df = pd.DataFrame(X_test, columns=dataset.columns[:-1])
-y_test_df = pd.DataFrame(y_test, columns=[dataset.columns[-1]])
-X_test_df.to_csv("../data/addicted_score.csv", index=False)
-y_test_df.to_csv("../data/students_social_media_data_sem_addicted_score.csv", index=False)
+model = RandomForestClassifier(n_estimators=50, 
+                               max_features='sqrt',
+                               min_samples_split=2,
+                               max_depth=10,
+                               min_samples_leaf=1)
 
+pipeline = Pipeline(steps=[('MinMaxScaler', MinMaxScaler()), ('RF', model)])
+
+pipeline.fit(X_train, y_train)
+predictions = pipeline.predict(X_test)
+print(accuracy_score(y_test, predictions))
 
 # Preparação do modelo com TODO o dataset
 scaler = MinMaxScaler().fit(X) # ajuste do scaler com TODO o dataset
@@ -405,21 +395,37 @@ rescaledX = scaler.transform(X) # aplicação da normalização com TODO o datas
 model.fit(rescaledX, y)
 
 # Novos dados - não sabemos a classe!
-data = {'preg':  [1, 9, 5],
-        'plas': [90, 100, 110],
-        'pres': [50, 60, 50],
-        'skin': [30, 30, 30],
-        'test': [100, 100, 100],
-        'mass': [20.0, 30.0, 40.0],
-        'pedi': [1.0, 2.0, 1.0],
-        'age': [15, 40, 40],  
-        }
+data = {
+    'Age': [19, 20, 23, 18, 21],
+    'Gender': [1, 1, 2, 0, 0],
+    'Academic_Level': [0, 1, 0, 2, 1],
+    'Country': [0, 0, 2, 3, 4],
+    'Avg_Daily_Usage_Hours': [5.2, 2.1, 6.0, 3.0, 4.5],
+    'Most_Used_Platform': [0, 0, 1, 0, 1],
+    'Affects_Academic_Performance': [1, 7, 5, 7, 6],
+    'Sleep_Hours_Per_Night': [6.5, 7.5, 5.0, 7.0, 6.0],
+    'Mental_Health_Score': [6, 8, 2, 1, 1],
+    'Relationship_Status': [1, 0, 4, 4, 2],
+    'Conflicts_Over_Social_Media': [3, 0, 9, 1, 7]
+}
 
-atributos = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age']
+atributos = [
+    'Age',
+    'Gender',
+    'Academic_Level',
+    'Country',
+    'Avg_Daily_Usage_Hours',
+    'Most_Used_Platform',
+    'Affects_Academic_Performance',
+    'Sleep_Hours_Per_Night',
+    'Mental_Health_Score',
+    'Relationship_Status',
+    'Conflicts_Over_Social_Media'
+]
 entrada = pd.DataFrame(data, columns=atributos)
 
 array_entrada = entrada.values
-X_entrada = array_entrada[:,0:8].astype(float)
+X_entrada = array_entrada[:,0:11].astype(float)
 
 # Padronização nos dados de entrada usando o scaler utilizado em X
 rescaledEntradaX = scaler.transform(X_entrada)

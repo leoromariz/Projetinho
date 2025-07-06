@@ -26,7 +26,7 @@ home_tag = Tag(
     description="Seleção de documentação: Swagger, Redoc ou RapiDoc",
 )
 aluno_tag = Tag(
-    id="Aluno",
+    name="Aluno",
     description="Adição, visualização, remoção e predição de alunos com base em seu uso de redes sociais",
 )
 
@@ -35,7 +35,7 @@ aluno_tag = Tag(
 @app.get("/", tags=[home_tag])
 def home():
     """Redireciona para o index.html do frontend."""
-    return redirect("/front/index.html")
+    return redirect("/front//my_website/index.html")
 
 
 # Rota para documentação OpenAPI
@@ -92,19 +92,6 @@ def predict(form: AlunoSchema):
     # Instanciando classes
     preprocessador = PreProcessador()
     pipeline = Pipeline()
-
-    # Recuperando os dados do formulário
-    age = form.age
-    gender = form.gender
-    academic_level = form.academic_level
-    country = form.country
-    avg_daily_usage_hours = form.avg_daily_usage_hours
-    most_used_platform = form.most_used_platform
-    affects_academic_performance = form.affects_academic_performance
-    sleep_hours_per_night = form.sleep_hours_per_night
-    mental_health_score = form.mental_health_score
-    relationship_status = form.relationship_status
-    conflicts_over_social_media = form.conflicts_over_social_media
 
     # Preparando os dados para o modelo
     X_input = preprocessador.preparar_form(form)

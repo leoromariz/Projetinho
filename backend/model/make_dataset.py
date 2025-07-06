@@ -46,6 +46,10 @@ CATEGORICAL_MAPPINGS = {
     'Relationship_Status': {
         'Single': 0, 'In Relationship': 1, 'Complicated': 2, 'Other': 3
     },
+    'Addicted_Score': {
+        6: 1, 7: 1, 8: 1, 9: 1, 10: 1,
+        0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0
+    }
 }
 
 
@@ -152,7 +156,7 @@ def save_processed_data(df, processed_data_filepath):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    project_root = r'D:\Documents\addicted_v1.0\Projetinho\backend\MachineLearning'
+    project_root = r'C:\Users\leonardo.romariz\Documents\addicted-V1.2\Projetinho\backend\MachineLearning'
 
     raw_data_filename = 'students_social_media_addiction.csv'
     raw_data_path = os.path.join(project_root, 'data', raw_data_filename)
