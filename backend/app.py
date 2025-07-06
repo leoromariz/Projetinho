@@ -5,7 +5,7 @@ from urllib.parse import unquote
 from sqlalchemy.exc import IntegrityError
 
 from model.pipeline import *
-from model.base import Session
+from model import Session
 from model.preprocessador import *
 from logger import logger
 from schemas.error_schema import ErrorSchema # Importação explícita do schema de erro

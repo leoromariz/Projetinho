@@ -17,8 +17,8 @@ colunas = ['age', 'gender', 'academic_level', 'country',
 # Carga dos dados
 dataset = carregador.carregar_dados(url_dados, colunas)
 array = dataset.values
-X = array[:,0:-1]
-y = array[:,-1]
+X = array[:,1:12]
+y = array[:,12]
     
 # Método para testar o modelo de Regressão Logística a partir do arquivo correspondente
 # O nome do método a ser testado necessita começar com "test_"
