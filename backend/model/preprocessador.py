@@ -56,7 +56,6 @@ class PreProcessador:
     def scaler(self, X_train):
         """ Normaliza os dados. """
         # normalização/padronização
-        # ATENÇÃO: Certifique-se de que o scaler utilizado é apropriado para os seus dados de aluno
         scaler = pickle.load(open('./MachineLearning/scalers/minmax_scaler_addicted.pkl', 'rb'))
         reescaled_X_train = scaler.transform(X_train)
         return reescaled_X_train

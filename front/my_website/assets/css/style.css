@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
-/* Reset Básico e Globais */
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -13,7 +12,6 @@ body {
     flex-direction: column;
 }
 
-/* Layout Principal */
 .site-header {
     background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
     color: white;
@@ -78,7 +76,7 @@ body {
 }
 
 .content-section {
-    flex-grow: 1; /* Permite que o conteúdo principal ocupe o espaço restante */
+    flex-grow: 1; 
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
@@ -87,7 +85,6 @@ body {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* Hero Section (Página Inicial) */
 .hero-section {
     display: flex;
     align-items: center;
@@ -125,7 +122,6 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Buttons */
 .btn {
     display: inline-block;
     padding: 12px 25px;
@@ -149,7 +145,6 @@ body {
     box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
 }
 
-/* Features Section (Página Inicial) */
 .features-section {
     text-align: center;
     padding: 40px 20px;
@@ -202,13 +197,12 @@ body {
     color: #666;
 }
 
-/* Footer */
 .site-footer {
     background-color: #333;
     color: white;
     padding: 30px 20px;
     text-align: center;
-    margin-top: auto; /* Empurra o rodapé para baixo */
+    margin-top: auto;
 }
 
 .site-footer p {
@@ -229,14 +223,13 @@ body {
     transform: translateY(-3px);
 }
 
-/* ----- ESTILOS DO FORMULÁRIO (HERDADOS E ADAPTADOS) ----- */
 .form-page .content-section {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinhe no topo se o conteúdo for maior */
-    padding: 0; /* O padding virá do form-wrapper */
-    background: none; /* Remove o fundo branco do content-section para que o wrapper defina */
-    box-shadow: none; /* Remove a sombra do content-section */
+    align-items: flex-start;
+    padding: 0;
+    background: none;
+    box-shadow: none;
 }
 
 
@@ -253,7 +246,7 @@ body {
 }
 
 .form-container {
-    width: 100%; /* Ajuste para o formulário ocupar o wrapper */
+    width: 100%;
 }
 
 .form-header {
@@ -334,7 +327,7 @@ body {
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group select {
-    width: calc(100% - 24px); /* Ajuste para padding */
+    width: calc(100% - 24px);
     padding: 14px 12px;
     border: 1px solid #c9d2da;
     border-radius: 8px;
@@ -360,7 +353,7 @@ body {
 }
 
 .radio-group input[type="radio"] {
-    display: none; /* Esconde o radio button padrão */
+    display: none;
 }
 
 .radio-group label {
@@ -467,7 +460,6 @@ button[type="submit"]:active {
     display: none;
 }
 
-/* About Section (Página Sobre) */
 .about-section {
     text-align: center;
     padding: 40px 20px;
@@ -479,7 +471,7 @@ button[type="submit"]:active {
     margin-bottom: 30px;
 }
 
-.about-section > p { /* O parágrafo principal da seção */
+.about-section > p {
     font-size: 1.1em;
     color: #555;
     margin-bottom: 40px;
@@ -507,7 +499,6 @@ button[type="submit"]:active {
     line-height: 1.7;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -559,13 +550,12 @@ button[type="submit"]:active {
     }
 }
 
-/* Estilos para a página de dados */
 .data-page .data-wrapper {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 1200px; /* Aumenta a largura para a tabela */
+    max-width: 1200px;
     margin: 40px auto;
     text-align: center;
 }
@@ -585,14 +575,13 @@ button[type="submit"]:active {
     font-size: 1.1em;
 }
 
-/* Estilos da tabela */
 .students-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px; /* Borda arredondada para a tabela */
-    overflow: hidden; /* Garante que as bordas arredondadas funcionem com o overflow */
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .students-table th,
@@ -603,7 +592,7 @@ button[type="submit"]:active {
 }
 
 .students-table th {
-    background-color: #4CAF50; /* Cor verde do tema */
+    background-color: #4CAF50;
     color: white;
     font-weight: bold;
     text-transform: uppercase;
@@ -619,13 +608,11 @@ button[type="submit"]:active {
     transition: background-color 0.3s ease;
 }
 
-/* Responsividade da tabela */
 .table-responsive {
-    overflow-x: auto; /* Adiciona scroll horizontal em telas pequenas */
-    -webkit-overflow-scrolling: touch; /* Melhor rolagem em dispositivos touch */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Mensagens de erro/carregamento */
 .error-message {
     color: #d9534f;
     background-color: #f2dede;
@@ -640,9 +627,8 @@ button[type="submit"]:active {
     display: none;
 }
 
-/* NOVOS ESTILOS PARA O BOTÃO DE DELETAR */
 .delete-btn {
-    background-color: #dc3545; /* Vermelho para deletar */
+    background-color: #dc3545;
     color: white;
     border: none;
     padding: 8px 12px;
@@ -650,10 +636,10 @@ button[type="submit"]:active {
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    display: inline-flex; /* Para alinhar o ícone */
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px; /* Espaçamento entre ícone e texto, se houver */
+    gap: 5px;
 }
 
 .delete-btn:hover {
@@ -662,21 +648,20 @@ button[type="submit"]:active {
 }
 
 .delete-btn i {
-    margin-right: 0; /* Remove margem extra do ícone se houver */
+    margin-right: 0;
 }
 
-/* NOVOS ESTILOS PARA O MODAL DE CONFIRMAÇÃO */
 .modal {
-    display: none; /* Escondido por padrão */
-    position: fixed; /* Fixo na tela */
-    z-index: 1000; /* Acima de outros elementos */
+    display: none;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Habilita rolagem se necessário */
-    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
-    display: flex; /* Para centralizar o conteúdo */
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -700,7 +685,7 @@ button[type="submit"]:active {
 }
 
 .modal-buttons button {
-    background-color: #4CAF50; /* Verde padrão, mas pode ser ajustado para o seu tema */
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -712,7 +697,7 @@ button[type="submit"]:active {
 }
 
 .modal-buttons .btn-confirm-no {
-    background-color: #6c757d; /* Cinza para "Não" */
+    background-color: #6c757d;
 }
 
 .modal-buttons button:hover {

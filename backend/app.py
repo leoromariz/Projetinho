@@ -1,5 +1,5 @@
 from flask_openapi3 import OpenAPI, Info, Tag
-from flask import redirect, request # Importado 'request'
+from flask import redirect, request
 from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
@@ -8,9 +8,9 @@ from model.pipeline import *
 from model import Session
 from model.preprocessador import *
 from logger import logger
-from schemas.error_schema import ErrorSchema # Importação explícita do schema de erro
-from schemas.aluno_schema import AlunoSchema, AlunoViewSchema, AlunoBuscaSchema, apresenta_aluno, apresenta_alunos # Importações explícitas e funções de apresentação
-from model.aluno import Aluno # Importação explícita do modelo Aluno
+from schemas.error_schema import ErrorSchema
+from schemas.aluno_schema import AlunoSchema, AlunoViewSchema, AlunoBuscaSchema, apresenta_aluno, apresenta_alunos
+from model.aluno import Aluno 
 from flask_cors import CORS
 
 
@@ -36,7 +36,7 @@ aluno_tag = Tag(
 @app.get("/", tags=[home_tag])
 def home():
     """Redireciona para o index.html do frontend."""
-    # Corrigido o caminho do redirecionamento, removendo a barra dupla
+
     return redirect("/front/my_website/index.html") 
 
 
@@ -86,13 +86,14 @@ def get_alunos():
         "409": ErrorSchema,
     },
 )
-# A função agora não recebe o 'form' diretamente na assinatura,
+
+# A função não recebe o 'form' diretamente na assinatura,
 # pois os dados virão de request.form
 def predict():
     """Adiciona um novo aluno à base de dados
     Retorna uma representação dos alunos e diagnósticos associados.
     """
-    # Coleta os dados do formulário enviado como x-www-form-urlencoded
+    # Coleta os dados do formulário
     form_data = request.form.to_dict()
     logger.debug(f"Dados recebidos do formulário: {form_data}")
 
@@ -111,7 +112,7 @@ def predict():
 
     # Preparando os dados para o modelo
     X_input = preprocessador.preparar_form(form)
-    logger.debug(f"Shape de X_input antes da predição: {X_input.shape}") # Debugging do shape
+    logger.debug(f"Shape de X_input antes da predição: {X_input.shape}")
     
     # Carregando modelo
     model_path = "./MachineLearning/pipelines/rf_addicted_pipeline.pkl"
@@ -141,7 +142,6 @@ def predict():
 
 
     aluno = Aluno(
-        # ID é autoincrementado, então não o passamos aqui.
         age = form.age,
         gender = form.gender,
         academic_level = form.academic_level,
@@ -155,23 +155,14 @@ def predict():
         conflicts_over_social_media = form.conflicts_over_social_media,
         outcome = outcome
     )
-    # logger.debug(f"Adicionando aluno de id: '{aluno.id}'") # ID ainda é None aqui, logar após commit
 
     try:
         # Criando conexão com a base
         session = Session()
 
-        # REMOVIDA A VERIFICAÇÃO DE DUPLICIDADE POR ID, pois o ID é autoincrementado
-        # e será gerado no commit. A unicidade é garantida pelo DB.
-        # Se você tiver outra regra de unicidade (ex: combinação de campos),
-        # você precisaria de uma UniqueConstraint no modelo SQLAlchemy para que
-        # IntegrityError seja capturado aqui.
-
-        # Adicionando aluno
         session.add(aluno)
         # Efetivando o comando de adição
         session.commit()
-        # O ID só estará disponível após o commit se for autoincrementado
         logger.debug(f"Adicionado aluno de id: '{aluno.id}'")
         return apresenta_aluno(aluno), 200
 
@@ -187,7 +178,6 @@ def predict():
         return {"message": error_msg}, 400
 
 
-# Métodos baseados em id
 # Rota de busca de aluno por id
 @app.get(
     "/aluno",
@@ -221,7 +211,6 @@ def get_aluno(query: AlunoBuscaSchema):
         )
         return {"message": error_msg}, 404
     else:
-        # Cuidado: aluno.name não existe no seu modelo, talvez seja aluno.id ou outro campo para log
         logger.debug(f"Aluno encontrado: '{aluno.id}'") 
         # retorna a representação do aluno
         return apresenta_aluno(aluno), 200

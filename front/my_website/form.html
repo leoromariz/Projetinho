@@ -113,7 +113,7 @@
                             'Sweden': 'Suécia',
                             'Norway': 'Noruega',
                             'Denmark': 'Dinamarca',
-                            'Netherlands': 'Holanda', // ou Países Baixos
+                            'Netherlands': 'Holanda',
                             'Belgium': 'Bélgica',
                             'Switzerland': 'Suíça',
                             'Austria': 'Áustria',
@@ -150,7 +150,7 @@
                             'Costa Rica': 'Costa Rica',
                             'Panama': 'Panamá',
                             'Jamaica': 'Jamaica',
-                            'Trinidad': 'Trindade e Tobago', // Assumindo Trinidad se refere a Trindade e Tobago
+                            'Trinidad': 'Trindade e Tobago', 
                             'Bahamas': 'Bahamas',
                             'Iceland': 'Islândia',
                             'Finland': 'Finlândia',
@@ -188,7 +188,7 @@
                             'Albania': 'Albânia',
                             'North Macedonia': 'Macedônia do Norte',
                             'Kosovo': 'Kosovo',
-                            'Bosnia': 'Bósnia e Herzegovina', // Assumindo "Bosnia" se refere a Bósnia e Herzegovina
+                            'Bosnia': 'Bósnia e Herzegovina',
                             'Qatar': 'Catar',
                             'Kuwait': 'Kuwait',
                             'Bahrain': 'Bahrein',
@@ -214,7 +214,7 @@
                             for (const countryEnglish in countriesData) {
                                 if (countriesData.hasOwnProperty(countryEnglish)) {
                                     const countryCode = countriesData[countryEnglish];
-                                    const countryPortuguese = countryNamesInPortuguese[countryEnglish] || countryEnglish; // Usa o nome em português, ou o inglês se não encontrar
+                                    const countryPortuguese = countryNamesInPortuguese[countryEnglish] || countryEnglish; 
 
                                     const option = document.createElement('option');
                                     option.value = countryCode;
@@ -271,12 +271,12 @@
                             for (const platformEnglish in platformData) {
                                 if (platformData.hasOwnProperty(platformEnglish)) {
                                     const platformCode = platformData[platformEnglish];
-                                    // Pega o nome em português, se existir no mapeamento, caso contrário, usa o nome em inglês
+                                    // Usa o nome em português se existir, caso contrário usa o nome em inglês
                                     const platformPortuguese = platformNamesInPortuguese[platformEnglish] || platformEnglish;
 
                                     const option = document.createElement('option');
-                                    option.value = platformCode; // Define o valor numérico
-                                    option.textContent = platformPortuguese; // Define o texto visível
+                                    option.value = platformCode; 
+                                    option.textContent = platformPortuguese; 
                                     selectElement.appendChild(option);
                                 }
                             }

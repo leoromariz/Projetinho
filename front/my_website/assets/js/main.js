@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Adicionar a classe 'active' ao link de navegação da página atual
     const navLinks = document.querySelectorAll('.nav-links a');
-    const currentPath = window.location.pathname.split('/').pop(); // Obtém o nome do arquivo (ex: index.html)
+    const currentPath = window.location.pathname.split('/').pop();
 
     navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPath) {
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Animação para scroll suave (exemplo, se você tiver âncoras internas)
+    // scroll suave
     // document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     //     anchor.addEventListener('click', function (e) {
     //         e.preventDefault();

@@ -85,11 +85,8 @@ def clean_data(df):
     if df.shape[0] < initial_rows:
         logging.info(f"Removidas {initial_rows - df.shape[0]} linhas duplicadas.")
 
-    # Preenche valores ausentes. Para colunas categóricas que serão mapeadas,
-    # valores ausentes podem ser mapeados para um novo número ou preenchidos
-    # com a categoria mais frequente antes do mapeamento.
-    # Por enquanto, mantemos fillna(0) para numéricas, e o mapeamento abaixo tratará strings.
-    df.fillna(0, inplace=True) # Exemplo: preenche NaNs em numéricas com 0
+
+    df.fillna(0, inplace=True) 
     if df.isnull().sum().sum() > 0:
         logging.warning("Ainda há valores ausentes após o preenchimento inicial. Verifique as colunas individualmente.")
         logging.info(f"Valores ausentes por coluna:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
@@ -112,10 +109,6 @@ def preprocess_data(df):
 
     for col, mapping in CATEGORICAL_MAPPINGS.items():
         if col in df.columns:
-            # Use .map() para aplicar o mapeamento
-            # .fillna(-1) pode ser usado para categorias não encontradas no mapeamento,
-            # ou para preencher NaNs que possam existir e não foram tratados antes.
-            # Se uma categoria não estiver no `mapping`, ela se tornará NaN.
             df[col] = df[col].map(mapping).fillna(-1) # Usando -1 para valores não mapeados/NaNs
             logging.info(f"Coluna '{col}' mapeada para numérico. Valores não mapeados/NaNs viraram -1.")
         else:

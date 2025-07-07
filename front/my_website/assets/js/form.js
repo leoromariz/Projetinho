@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('socialMediaForm');
-    // const outputDiv = document.getElementById('output'); // Não precisamos mais desta div para o sucesso
+    // const outputDiv = document.getElementById('output');
 
     if (form) {
         form.addEventListener('submit', async (event) => {
@@ -54,9 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const result = await response.json();
 
-                // outputDiv.classList.remove('hidden'); // Não precisamos mais desta linha para o sucesso
-                // outputDiv.innerHTML = ''; // Não precisamos mais desta linha para o sucesso
-
                 if (response.ok) {
                     const outcomeText = result.outcome === 1 ?
                         "Viciado em Mídias Sociais" :
@@ -66,9 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(`Aluno adicionado com sucesso!\nResultado da Predição: ${outcomeText}`);
                     
                     form.reset(); // Limpa o formulário após o sucesso
-                    // Não precisamos mais do setTimeout para esconder a div, pois estamos usando alert
                 } else {
-                    // Mantemos a div para exibir mensagens de erro da API
                     outputDiv.classList.remove('hidden');
                     const errorMessage = result.message || "Ocorreu um erro desconhecido na API.";
                     outputDiv.innerHTML = `<p class="error-message"><strong>Erro:</strong> ${errorMessage}</p>`;
