@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre os Dados - Análise de Mídias Sociais</title>
+    <title>Lista de Alunos - Análise de Mídias Sociais</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" href="midia2.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header class="site-header">
         <nav class="navbar">
@@ -15,37 +17,36 @@
             <ul class="nav-links">
                 <li><a href="index.html">Início</a></li>
                 <li><a href="form.html">Teste de vício</a></li>
-                <li><a href="data.html" class="active">Sobre os Dados</a></li>
+                <li><a href="data.html" class="active">Dados Cadastrados</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="content-section about-section">
-        <h1>Sobre Nosso Estudo e Dados</h1>
-        <p>Esta seção é dedicada a fornecer mais informações sobre a metodologia do nosso estudo, a origem dos dados e os insights que coletamos.</p>
-
-        <div class="about-card">
-            <h2>Nosso Objetivo</h2>
-            <p>Compreender a fundo o impacto do uso de mídias sociais na vida dos estudantes, abrangendo aspectos acadêmicos, de saúde mental e relacionamentos sociais.</p>
+    <main class="content-section data-page">
+        <div class="data-wrapper">
+            <div class="data-container">
+                <div class="data-header">
+                    <img src="midia2.png" alt="Ícone de Mídias Sociais" class="header-icon">
+                    <h1>Alunos Cadastrados</h1>
+                    <p>Aqui você pode visualizar todos os alunos registrados em nossa base de dados.</p>
+                </div>
+                <div id="studentsTableContainer" class="table-responsive">
+                    <!-- A tabela será carregada aqui pelo JavaScript -->
+                    <p>Carregando dados...</p>
+                </div>
+                <div id="errorMessage" class="error-message hidden">
+                    <p>Não foi possível carregar os dados dos alunos. Por favor, tente novamente mais tarde.</p>
+                </div>
+            </div>
         </div>
-
-        <div class="about-card">
-            <h2>A Origem dos Dados</h2>
-            <p>Os dados são coletados através de pesquisas voluntárias e anônimas, como o formulário disponível em nossa página "Participar da Pesquisa". Nosso dataset principal, "Students Social Media Addiction.csv", é a base para nossas análises.</p>
-        </div>
-
-        <div class="about-card">
-            <h2>Privacidade e Segurança</h2>
-            <p>Garantimos a total privacidade e anonimato dos participantes. Todos os dados são tratados com a máxima segurança e utilizados exclusivamente para fins de pesquisa e conscientização.</p>
-        </div>
-
-        <p>Aguarde por análises mais detalhadas e visualizações interativas em breve nesta página!</p>
     </main>
 
     <footer class="site-footer">
         <p>&copy; 2025 Teste de vício em Mídias Sociais.</p>
     </footer>
 
+    <script src="assets/js/data.js"></script>
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

@@ -558,3 +558,167 @@ button[type="submit"]:active {
         padding: 12px;
     }
 }
+
+/* Estilos para a página de dados */
+.data-page .data-wrapper {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px; /* Aumenta a largura para a tabela */
+    margin: 40px auto;
+    text-align: center;
+}
+
+.data-page .data-header {
+    margin-bottom: 30px;
+}
+
+.data-page .data-header h1 {
+    color: #333;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.data-page .data-header p {
+    color: #666;
+    font-size: 1.1em;
+}
+
+/* Estilos da tabela */
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Borda arredondada para a tabela */
+    overflow: hidden; /* Garante que as bordas arredondadas funcionem com o overflow */
+}
+
+.students-table th,
+.students-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.students-table th {
+    background-color: #4CAF50; /* Cor verde do tema */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.students-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.students-table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+/* Responsividade da tabela */
+.table-responsive {
+    overflow-x: auto; /* Adiciona scroll horizontal em telas pequenas */
+    -webkit-overflow-scrolling: touch; /* Melhor rolagem em dispositivos touch */
+}
+
+/* Mensagens de erro/carregamento */
+.error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* NOVOS ESTILOS PARA O BOTÃO DE DELETAR */
+.delete-btn {
+    background-color: #dc3545; /* Vermelho para deletar */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex; /* Para alinhar o ícone */
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Espaçamento entre ícone e texto, se houver */
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+.delete-btn i {
+    margin-right: 0; /* Remove margem extra do ícone se houver */
+}
+
+/* NOVOS ESTILOS PARA O MODAL DE CONFIRMAÇÃO */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed; /* Fixo na tela */
+    z-index: 1000; /* Acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita rolagem se necessário */
+    background-color: rgba(0,0,0,0.4); /* Fundo semi-transparente */
+    display: flex; /* Para centralizar o conteúdo */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.modal-buttons button {
+    background-color: #4CAF50; /* Verde padrão, mas pode ser ajustado para o seu tema */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-buttons .btn-confirm-no {
+    background-color: #6c757d; /* Cinza para "Não" */
+}
+
+.modal-buttons button:hover {
+    opacity: 0.9;
+}
+
+.modal-buttons .btn-confirm-no:hover {
+    background-color: #5a6268;
+}

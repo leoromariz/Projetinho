@@ -24,6 +24,7 @@ class AlunoSchema(BaseModel):
 class AlunoViewSchema(BaseModel):
     """Define como um aluno será retornado
     """
+    id: int = Field(..., example=1, description="ID único do aluno") 
     age: int = Field(..., example=20, description="Idade do aluno")
     gender: int = Field(..., example=1, description="Gênero do aluno")
     academic_level: int = Field(..., example=2, description="Nível acadêmico do aluno")
@@ -46,7 +47,7 @@ class AlunoBuscaSchema(BaseModel):
 class ListaAlunosSchema(BaseModel):
     """Define como uma lista de alunos será representada
     """
-    alunos: List[AlunoSchema]
+    alunos: List[AlunoViewSchema] 
 
 
 class AlunoDelSchema(BaseModel):
@@ -60,6 +61,7 @@ def apresenta_aluno(aluno: Aluno):
         AlunoViewSchema.
     """
     return {
+        "id": aluno.id,
         "age": aluno.age,
         "gender": aluno.gender,
         "academic_level": aluno.academic_level,
@@ -76,12 +78,13 @@ def apresenta_aluno(aluno: Aluno):
 
 # Apresenta uma lista de alunos
 def apresenta_alunos(alunos: List[Aluno]):
-    """ Retorna uma representação do aluno seguindo o schema definido em
+    """ Retorna uma representação da lista de alunos seguindo o schema definido em
         AlunoViewSchema.
     """
     result = []
     for aluno in alunos:
         result.append({
+            "id": aluno.id, # Adicionado o ID aqui
             "age": aluno.age,
             "gender": aluno.gender,
             "academic_level": aluno.academic_level,
@@ -97,4 +100,3 @@ def apresenta_alunos(alunos: List[Aluno]):
         })
 
     return {"alunos": result}
-
